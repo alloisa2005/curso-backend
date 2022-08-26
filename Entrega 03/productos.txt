@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Zapatillas Nike",
+    "price": 1500,
+    "thumbnail": "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
+    "id": 1
+  },
+  {
+    "title": "Remera",
+    "price": 800,
+    "thumbnail": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=415&q=80",
+    "id": 2
+  },
+  {
+    "title": "Gorra",
+    "price": 350,
+    "thumbnail": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80",
+    "id": 3
+  },
+  {
+    "title": "Zapatillas Converse",
+    "price": 320,
+    "thumbnail": "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "id": 4
+  },
+  {
+    "title": "Jean",
+    "price": 400,
+    "thumbnail": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=397&q=80",
+    "id": 5
+  },
+  {
+    "title": "Zapatillas Adidas",
+    "price": 350,
+    "thumbnail": "https://images.unsplash.com/photo-1593287073863-c992914cb3e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+    "id": 6
+  }
+]
