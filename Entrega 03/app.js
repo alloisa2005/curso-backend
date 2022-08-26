@@ -51,7 +51,9 @@ let productosArray = [
 
 const server = app.listen(8080, () => console.log("Server Up!!"));
 
-app.get("/", (req, res) => {});
+app.get("/", (req, res) => {
+  res.send('<div style="width=100%; text-align:center;"> <h2>Entrega 03 - Productos con Express <h2> </div>');
+});
 
 // Ruta que devuelve los productos del array
 app.get("/productos", (req, res) => {
@@ -75,7 +77,8 @@ app.get("/productosTxt", (req, res) => {
   prods.getAll()
     .then((resp) =>
       res.send({
-        resp,
+        status: resp.status,
+        result: resp.data
       })
     )
     .catch((error) => res.send({ status: "error", message: error.message }));
