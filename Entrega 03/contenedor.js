@@ -92,29 +92,3 @@ class Contenedor {
 module.exports = Contenedor;
 
 
-/*
-save = (obj) => {
-    try {
-      let arch = fs.readFileSync(this.archivo, 'utf-8'); 
-      let data = JSON.parse(arch);                 
-      
-      //fs.promises.readFile(this.archivo).then( r => console.log(r));
-      // Obtengo nuevo ID a grabar
-      let newId = data[data.length - 1].id + 1;
-      obj.id = newId;
-
-      data.push(obj);                  
-      fs.writeFileSync(this.archivo, JSON.stringify(data,null,2) );          
-
-      return obj.id;
-
-    } catch (error) {  
-      // Si el archivo no existe lo creo y le agrego el array con el obj pasado por parametro e ID = 1
-      obj.id = 1;
-      let data = JSON.stringify([obj],null,2);
-      fs.writeFileSync(this.archivo, data);  
-      
-      return obj.id;
-    }
-  }
-*/
