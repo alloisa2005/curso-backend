@@ -55,9 +55,7 @@ class Contenedor {
 
       }else {
         return {status: 'error', data: `No existe el archivo ${this.archivo}`}
-      }
-      let data = fs.readFileSync(this.archivo, 'utf-8'); 
-      return JSON.parse(arch,null,2);                       
+      }      
 
     } catch (error) {
       return {status: 'error', data: error.message}
