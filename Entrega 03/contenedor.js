@@ -54,13 +54,13 @@ class Contenedor {
         return {status: 'success', data};
 
       }else {
-        return {status: 'error', message: `No existe el archivo ${this.archivo}`}
+        return {status: 'error', data: `No existe el archivo ${this.archivo}`}
       }
       let data = fs.readFileSync(this.archivo, 'utf-8'); 
       return JSON.parse(arch,null,2);                       
 
     } catch (error) {
-      return {status: 'error', message: error.message}
+      return {status: 'error', data: error.message}
     }
   }
 
