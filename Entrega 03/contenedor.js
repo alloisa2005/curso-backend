@@ -62,6 +62,32 @@ class Contenedor {
     }
   }
 
+  // Metodo que trae un producto al azar del archivo
+  getRandom = async () => {
+    try {
+      if(fs.existsSync(this.archivo)){
+
+        let arch = await fs.promises.readFile(this.archivo, 'utf-8');
+        let data = JSON.parse(arch);
+
+        let id = Math.floor(Math.random() * data.length + 1);   
+        let product = data[id - 1]; 
+        return {
+          title: product.title,
+          price: product.price,
+          thumbnail: product.thumbnail,
+          id: product.id,
+        };
+
+      }else {
+        return {status: 'error', msg: `No existe el archivo ${this.archivo}`}
+      }      
+
+    } catch (error) {
+      return {status: 'error', msg: error.message}
+    }
+  }
+
   deleteById = (id) => {
     try {
       let arch = fs.readFileSync(this.archivo, 'utf-8'); 

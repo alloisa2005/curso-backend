@@ -2,6 +2,7 @@ const Contenedor = require("./contenedor");
 const express = require("express");
 
 const app = express();
+let puerto = 8080;
 
 // Declaro Array con productos
 let productosArray = [
@@ -49,7 +50,7 @@ let productosArray = [
   },
 ];
 
-const server = app.listen(8080, () => console.log("Server Up!!"));
+const server = app.listen(puerto, () => console.log("Server Up!!"));
 
 app.get("/", (req, res) => {
   res.send('<div style="width=100%; text-align:center;"> <h2>Entrega 03 - Productos con Express <h2> </div>');
@@ -87,12 +88,8 @@ app.get("/productosTxt", (req, res) => {
 // Ruta que devuelve un producto del txt al azar
 app.get("/productoRandomTxt", (req, response) => {
   let prods = new Contenedor("productos.txt");
-  prods.getAll()
-    .then( respuesta => {
-
-      let id = Math.floor(Math.random() * respuesta.data.length + 1);      
-      let product = respuesta.data[id - 1];  
-      response.send({ status: "success", result: product });    
-
+  prods.getRandom()
+    .then( respuesta => {            
+      response.send({ status: "success", result: respuesta });    
     });    
 });
