@@ -6,7 +6,7 @@ class Contenedor {
     this.archivo = archivo;
   }
 
-  reSave = async (obj) => {
+  save = async (obj) => {
     
     try {
       if(fs.existsSync(this.archivo)){
@@ -14,86 +14,84 @@ class Contenedor {
         let data = JSON.parse(arch);
         let id = data[data.length - 1].id+1;
         obj.id = id;
+        console.log(obj);
         data.push(obj);
         await fs.promises.writeFile(this.archivo,JSON.stringify(data,null,2))
-        return {status: "success", message: "Data added"}
+        return {status: "success", message: "Producto agregado"}
       }else {
         obj.id = 1
         await fs.promises.writeFile(this.archivo, JSON.stringify([obj], null, 2))
-        return {status: "success", message: "Data created"}
+        return {status: "success", message: "Archivo creado"}
       }
 
     } catch (error) {
       return {status: 'error', message: error.message}
     }
-  }
+  }  
 
-  save = (obj) => {
+  getById = async (id) => {
     try {
-      let arch = fs.readFileSync(this.archivo, 'utf-8'); 
-      let data = JSON.parse(arch);                 
-      
-      //fs.promises.readFile(this.archivo).then( r => console.log(r));
-      // Obtengo nuevo ID a grabar
-      let newId = data[data.length - 1].id + 1;
-      obj.id = newId;
-
-      data.push(obj);                  
-      fs.writeFileSync(this.archivo, JSON.stringify(data,null,2) );          
-
-      return obj.id;
-
-    } catch (error) {  
-      // Si el archivo no existe lo creo y le agrego el array con el obj pasado por parametro e ID = 1
-      obj.id = 1;
-      let data = JSON.stringify([obj],null,2);
-      fs.writeFileSync(this.archivo, data);  
-      
-      return obj.id;
+      if(fs.existsSync(this.archivo)){
+        let arch = await fs.promises.readFile(this.archivo, 'utf-8');
+        let data = JSON.parse(arch);
+        let obj = data.find( (item) => item.id === id);
+        
+        if(!obj) return {status: 'error', data: `No existe el producto con ID: ${id}`}
+        return {status: 'success', data: obj};
+      }else {
+        return {status:'error', message:`No existe el archivo ${this.archivo}`}
+      }      
+    } catch (error) {
+      return {status:'error', message: error.message}
     }
   }
 
-  getById = (id) => {
+  getAll = async () => {
     try {
-      let arch = fs.readFileSync(this.archivo, 'utf-8'); 
-      let data = JSON.parse(arch);                 
-      let obj = data.find( (item) => item.id === id);
-      return obj ? obj : null;      
+      if(fs.existsSync(this.archivo)){
 
+        let arch = await fs.promises.readFile(this.archivo, 'utf-8');
+        let data = JSON.parse(arch);
+
+        return {status: 'success', data};
+
+      }else {
+        return {status: 'error', data: `No existe el archivo ${this.archivo}`}
+      }      
+
+    } catch (error) {
+      return {status: 'error', data: error.message}
+    }
+  }    
+
+  deleteById = async (id) => {
+    try {
+      if(fs.existsSync(this.archivo)){
+        let arch = await fs.promises.readFile(this.archivo, 'utf-8');
+        let data = JSON.parse(arch);
+        
+        let obj = data.find( (item) => item.id === id);        
+        if(!obj) return {status: 'error', data: `No existe el producto con ID: ${id}`}
+  
+        data = data.filter( (item) => item.id !== id);      
+  
+        await fs.promises.writeFile(this.archivo,JSON.stringify(data,null,2))
+        return {status: "success", message: `Producto ID ${id} eliminado con éxito`}
+      }else{
+        return {status:'error', message:`No existe el archivo ${this.archivo}`}
+      }
     } catch (error) {
       console.log(`No existe el archivo ${this.archivo}`);
     }
   }
 
-  getAll = () => {
+  deleteAll = async () => {
     try {
-      let arch = fs.readFileSync(this.archivo, 'utf-8'); 
-      return JSON.parse(arch,null,2);                       
-
-    } catch (error) {
-      console.log(`No existe el archivo ${this.archivo}`);
-    }
-  }
-
-  deleteById = (id) => {
-    try {
-      let arch = fs.readFileSync(this.archivo, 'utf-8'); 
-      let data = JSON.parse(arch);
-
-      data = data.filter( (item) => item.id !== id);
-
-      data = JSON.stringify(data,null,2);
-      fs.writeFileSync(this.archivo, data);  
-
-    } catch (error) {
-      console.log(`No existe el archivo ${this.archivo}`);
-    }
-  }
-
-  deleteAll = () => {
-    try {
-      let data = JSON.stringify([],null,2);
-      fs.writeFileSync(this.archivo, data);
+      if(fs.existsSync(this.archivo)){                
+        await fs.promises.writeFile(this.archivo,JSON.stringify([],null,2))
+      }else{
+        return {status:'error', message:`No existe el archivo ${this.archivo}`}
+      }      
     } catch (error) {
       console.log(`No existe el archivo ${this.archivo}`);
     }
@@ -101,3 +99,5 @@ class Contenedor {
 }
 
 module.exports = Contenedor;
+
+
