@@ -21,7 +21,7 @@ form_prod.addEventListener('submit', (e) => {
   // Le agrego vacío el campo thumbnail al obj para guardar
   obj.thumbnail = '';     
 
-  fetch('/api/products',{
+  fetch('/api/productos',{
     method: 'POST',
     body: JSON.stringify(obj),
     headers: {
