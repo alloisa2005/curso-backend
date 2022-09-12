@@ -1,0 +1,77 @@
+
+const express = require('express');
+const crypto = require('crypto');
+const router = express.Router();
+
+const { validarProductId, validarInputsProduct } = require('../middlewares/validar')
+//let products = require('../data/products_data'); 
+
+let products = [];
+
+router.get('/', (req, res) => {
+  res.render('productList', {
+    products    
+  });
+  //res.status(200).send({status: 'OK', result:products});
+});
+
+router.get('/:id', validarProductId, (req, res) => {
+  try {
+    let {id} = req.params;
+    let prod = products.find( p => p.id === id);  
+
+    // Si pasa la validación, se que el producto va a existir, por eso no pongo un "else"
+    res.status(200).send({status: 'OK', result: prod}) 
+  } catch (error) {
+    res.status(404).send({status: 'ERROR', result: error.message}) 
+  }       
+});
+
+router.post('/', validarInputsProduct, (req, res) => {
+  try {
+    let producto = req.body;    
+    producto.id = crypto.randomUUID();  
+
+    products.push(producto);  
+    //res.status(200).send({status: 'OK', result: producto});  
+    res.redirect('/');
+  } catch (error) {
+    res.status(404).send({status: 'ERROR', result: error.message}) 
+  }  
+});
+
+
+router.put('/:id', validarProductId, validarInputsProduct, (req, res) => {
+  try {
+    let {id} = req.params;
+
+    // El producto existe porq pasó la validación de ID (validarProductId)
+    let prod = products.find( p => p.id === id);  
+          
+    // Obtengo el producto que viene en el body
+    let productoBody = req.body;
+
+    prod.title = productoBody.title;
+    prod.price = productoBody.price;
+    prod.thumbnail = productoBody.thumbnail;
+
+    res.status(200).send({status: 'OK', result: prod});
+  } catch (error) {
+    res.status(404).send({status: 'ERROR', result: error.message}) 
+  }
+});
+
+
+router.delete('/:id', validarProductId, (req, res) => {
+  try {
+    let {id} = req.params;
+    let prod = products.find( p => p.id === id);  
+
+    products = products.filter( p => p.id !== id);
+    res.status(200).send({status: 'OK', result: `Producto ID ${id} borrado correctamente`});
+  } catch (error) {
+    res.status(404).send({status: 'ERROR', result: error.message}) 
+  }
+});
+
+module.exports = router;
